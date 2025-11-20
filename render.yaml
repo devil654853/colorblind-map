@@ -1,0 +1,1 @@
+services: - type: web name: colorblind-map-service env: python buildCommand: "pip install -r requirements.txt" startCommand: "bash start.sh" runtime: python3 autoDeploy: true

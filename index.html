@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>색각친화 지도 변환기</title>
+</head>
+<body>
+
+<h2>색각이상자를 위한 지도 자동 변환</h2>
+
+<input type="file" id="upload" accept="image/*"><br><br>
+
+<button onclick="convertImage()">색각친화 지도 만들기</button>
+
+<h3>결과 이미지</h3>
+<img id="result" style="max-width: 400px; display:none;">
+
+<script>
+async function convertImage() {
+  const fileInput = document.getElementById("upload");
+  if (!fileInput.files.length) {
+    alert("이미지를 먼저 업로드해주세요!");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("file", fileInput.files[0]);
+
+  const response = await fetch("http://localhost:8000/convert", {
+    method: "POST",
+    body: formData
+  });
+
+  const blob = await response.blob();
+  const url = URL.createObjectURL(blob);
+
+  const img = document.getElementById("result");
+  img.src = url;
+  img.style.display = "block";
+}
+</script>
+
+</body>
+</html>
